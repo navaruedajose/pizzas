@@ -1,9 +1,13 @@
 {
-  "name": "holamundo",
+  "name": "pizzas",
   "version": "1.0.0",
-  "description": "hola mundo",
+  "description": "Pizzas project",
   "license": "ISC",
-  "author": "leonardo hernandez",
+  "author": "Jose Nava",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/navaruedajose/pizzas.git"
+  },
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
