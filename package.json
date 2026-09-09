@@ -1,20 +1,17 @@
 {
-  "name": "pizzas",
+  "name": "holamundov2",
   "version": "1.0.0",
-  "description": "Pizzas project",
+  "description": "hola mundo refactorizado",
   "license": "ISC",
-  "author": "Jose Nava",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/navaruedajose/pizzas.git"
-  },
-  "type": "commonjs",
+  "author": "jose nava",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "nodemon": "^3.1.14"
   }
