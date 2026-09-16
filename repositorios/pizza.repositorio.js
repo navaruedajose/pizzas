@@ -1,59 +1,85 @@
-//Esta es la capa donde se persisten los datos
+// Esta es la capa donde se persisten los datos.
+import { MongoClient } from "mongodb"
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+// Aquí está la cadena de conexión actualizada con root:123
+const CADENA_CONEXION = process.env.MONGODB_URI ?? "mongodb://root:123@127.0.0.1:27017/?authSource=admin"
+const NOMBRE_BASE_DATOS = process.env.MONGODB_DATABASE ?? "holamundo"
+const clienteMongo = new MongoClient(CADENA_CONEXION)
+const coleccionPizzas = clienteMongo.db(NOMBRE_BASE_DATOS).collection("pizzas")
 
-let pizzas = [{ id: 1, nombre: "Hawaiina", descripcion: "Jamon y piña" }]
+let conexion
+
+async function obtenerColeccionPizzas() {
+  conexion ??= clienteMongo.connect()
+  await conexion
+
+  return coleccionPizzas
+}
+
 /**
  * Regresa una lista de las pizzas
- * @returns []
+ * @returns {Promise<Array>} Promesa que resuelve con todas las pizzas.
  */
 export async function obtenerTodasLasPizzasAsync() {
-  await sleep(2000)
+  const coleccion = await obtenerColeccionPizzas()
 
-  return pizzas
+  return coleccion.find({}, { projection: { _id: 0 } }).sort({ id: 1 }).toArray()
 }
 
 /**
  * Regresa la pizza del id buscado o undefined si no lo encuentra
- * @param {*} id
+ * @param {number|string} id Identificador de la pizza que se desea buscar.
+ * @returns {Promise<Object|undefined>} Promesa que resuelve con la pizza o `undefined`.
  */
 export async function obtenerPizzaPorIdAsync(id) {
-  await sleep(1000)
+  const coleccion = await obtenerColeccionPizzas()
 
-  const pizza = pizzas.find(x => x.id == id)
-
-  return pizza
+  return coleccion.findOne({ id: Number(id) }, { projection: { _id: 0 } })
 }
 
+/**
+ * Agrega una pizza y regresa su identificador
+ * @param {{nombre: string, descripcion: string}} pizza Datos de la pizza que se agregará.
+ * @returns {Promise<number>} Promesa que resuelve con el identificador asignado.
+ */
 export async function agregarPizzaAsync(pizza) {
-  await sleep(1000)
-  pizzas.push(pizza)
+  const coleccion = await obtenerColeccionPizzas()
+  const ultimaPizza = await coleccion.find().sort({ id: -1 }).limit(1).next()
+  const id = ultimaPizza ? ultimaPizza.id + 1 : 1
+
+  await coleccion.insertOne({ ...pizza, id })
+
+  return id
 }
 
-export async function actualizarPizzaAsync(id, datosActualizados) {
-  await sleep(1000)
+/**
+ * Actualiza el nombre y la descripción de una pizza.
+ * @param {number|string} id Identificador de la pizza que se actualizará.
+ * @param {{nombre: string, descripcion: string}} pizza Nuevos datos de la pizza.
+ * @returns {Promise<Object|undefined>} Promesa que resuelve con la pizza actualizada o `undefined`.
+ */
+export async function actualizarPizzaAsync(id, pizza) {
+  const coleccion = await obtenerColeccionPizzas()
+  const resultado = await coleccion.updateOne(
+    { id: Number(id) },
+    { $set: { nombre: pizza.nombre, descripcion: pizza.descripcion } },
+  )
 
-  const indice = pizzas.findIndex(x => x.id == id)
-
-  if (indice === -1) {
+  if (resultado.matchedCount === 0) {
     return undefined
   }
 
-  pizzas[indice] = { ...pizzas[indice], ...datosActualizados, id: pizzas[indice].id }
-
-  return pizzas[indice]
+  return obtenerPizzaPorIdAsync(id)
 }
 
-export async function borrarPizzaAsync(id) {
-  await sleep(1000)
+/**
+ * Elimina una pizza por su identificador.
+ * @param {number|string} id Identificador de la pizza que se eliminará.
+ * @returns {Promise<boolean>} Promesa que resuelve `true` si se eliminó o `false` si no existía.
+ */
+export async function eliminarPizzaAsync(id) {
+  const coleccion = await obtenerColeccionPizzas()
+  const resultado = await coleccion.deleteOne({ id: Number(id) })
 
-  const indice = pizzas.findIndex(x => x.id == id)
-
-  if (indice === -1) {
-    return false
-  }
-
-  pizzas.splice(indice, 1)
-
-  return true
+  return resultado.deletedCount > 0
 }
