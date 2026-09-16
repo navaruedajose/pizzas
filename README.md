@@ -78,11 +78,6 @@ text
 
 <img width="1308" height="820" alt="postman-delete-pizza" src="https://github.com/user-attachments/assets/fa855aa9-5314-4811-8baf-ab17f0c1e89f" />
 
-```
-
-Estas imágenes pueden subirse al repositorio para dejar evidencia de la prueba de cada endpoint.
-
-## Referencia técnica
 
 La implementación usa el driver oficial `mongodb` para Node.js y sus operaciones `find`, `findOne`, `insertOne`, `updateOne` y `deleteOne`, siguiendo los ejemplos de CRUD de la documentación oficial de MongoDB:
 
