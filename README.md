@@ -1,5 +1,4 @@
-<img width="1308" height="820" alt="postman-delete-pizza" src="https://github.com/user-attachments/assets/c1f4d454-182c-4ef5-8b16-009a1c6c6c2a" />
-<img width="1308" height="820" alt="postman-delete-pizza" src="https://github.com/user-attachments/assets/f39583f9-86c2-486a-bf53-5ae9540e08db" />
+
 # CRUD de pizzas con Node.js y MongoDB
 
 API REST para administrar pizzas usando Express y MongoDB. La persistencia se realiza en la colección `pizzas` de la base de datos `holamundo`.
