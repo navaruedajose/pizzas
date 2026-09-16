@@ -67,11 +67,15 @@ Se pueden adjuntar aquí las capturas de pantalla de la ejecución de la colecci
 Estructura sugerida:
 
 ```text
-docs/
-├── postman-testing.png
-├── postman-create-pizza.png
-├── postman-update-pizza.png
-└── postman-delete-pizza.png
+<img width="1517" height="1192" alt="image" src="https://github.com/user-attachments/assets/6539ab1b-f432-4cf4-9420-195fd35d2c91" />
+
+<img width="1597" height="1052" alt="image" src="https://github.com/user-attachments/assets/77d21c80-7dbf-4f2b-a877-1b6e305fc56e" />
+
+<img width="1323" height="949" alt="image" src="https://github.com/user-attachments/assets/fd963a91-a438-4cb7-abe0-25122f542242" />
+<img width="1448" height="884" alt="image" src="https://github.com/user-attachments/assets/7019f6b3-5b11-436e-9d64-69de44161ee0" />
+<img width="1376" height="891" alt="image" src="https://github.com/user-attachments/assets/4e6f5180-f9ad-4518-9387-1a46b166585e" />
+
+
 ```
 
 Estas imágenes pueden subirse al repositorio para dejar evidencia de la prueba de cada endpoint.
